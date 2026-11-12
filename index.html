@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aaron Saucedo – Electrical Engineering student at CSULB. Hardware projects spanning CAD, circuit simulation, firmware and testing, aimed at design engineering in aerospace and automotive.">
+<meta property="og:title" content="Aaron Saucedo | Engineering Portfolio">
+<meta property="og:description" content="EE student at CSULB building hardware from CAD and simulation to working prototypes: a battery charger with live power monitoring and a handheld Arduino Tetris game.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#040806">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23040806'/%3E%3Cpath d='M3 16 Q8 4 12 16 T21 16 T30 16' fill='none' stroke='%2339ff7a' stroke-width='3'/%3E%3C/svg%3E">
+<title>Aaron Saucedo | Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #040806;
+    --panel: #0a130d;
+    --panel-2: #0e1a12;
+    --line: #17301f;
+    --text: #d8f5e1;
+    --muted: #7fa58b;
+    --cyan: #39ff7a;
+    --yellow: #39ff7a;
+    --purple: #2bd9a0;
+    --green: #39ff7a;
+    --red: #ff5f5f;
+    --orange: #ffb347;
+    --blue: #2bd9a0;
+    --glow: 0 0 8px rgba(57,255,122,.55);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, sans-serif;
+    line-height: 1.6;
+    background-image:
+      linear-gradient(rgba(57,255,122,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57,255,122,.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  h1, h2, h3, h4 { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.02em; }
+  .readout { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; margin-top: 34px; }
+  .readout b { color: var(--green); font-weight: 600; text-shadow: var(--glow); }
+  a { color: var(--cyan); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(4,8,6,.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; text-shadow: var(--glow); }
+  nav ul { list-style: none; display: flex; gap: 22px; }
+  nav ul a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; }
+  nav ul a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding: 110px 0 90px; border-bottom: 1px solid var(--line); }
+  #blocks { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
+  .hero::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(4,8,6,.94) 0%, rgba(4,8,6,.85) 40%, rgba(4,8,6,.2) 75%, rgba(4,8,6,0) 100%); }
+  .hero .wrap { z-index: 1; }
+  .hero .wrap { position: relative; }
+  .tag { font-family: 'JetBrains Mono', monospace; color: var(--green); font-size: 14px; margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span { color: var(--green); text-shadow: var(--glow); }
+  .hero p { color: var(--muted); font-size: 18px; max-width: 600px; margin-bottom: 30px; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 8px;
+    background: var(--green); color: #031208; box-shadow: var(--glow); font-weight: 700; text-decoration: none; margin-right: 10px;
+  }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); box-shadow: none; }
+
+  /* Sections */
+  section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--yellow); margin-bottom: 14px; }
+  h2 { font-size: 34px; margin-bottom: 12px; }
+  .lead { color: var(--muted); max-width: 700px; margin-bottom: 36px; }
+  h3 { font-size: 20px; margin: 34px 0 14px; }
+
+  .status { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
+  .status.done { background: rgba(57,255,122,.12); color: var(--green); }
+  .status.wip { background: rgba(255,179,71,.12); color: var(--orange); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--panel-2); border: 1px solid var(--line); padding: 4px 10px; border-radius: 6px; color: var(--muted); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 760px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+  }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  .card h4 { font-size: 15px; margin-bottom: 8px; }
+  .card p, .card li { color: var(--muted); font-size: 15px; }
+  .card ul { padding-left: 18px; }
+
+  /* Media placeholders */
+  .media {
+    aspect-ratio: 16/9; border-radius: 12px; border: 2px dashed var(--line);
+    background: var(--panel); display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; text-align: center; padding: 16px; overflow: hidden;
+  }
+  .media.photo { aspect-ratio: 4/3; }
+  .media .icon { font-size: 30px; margin-bottom: 8px; }
+  .media img, .media video { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+  .caption { color: var(--muted); font-size: 13px; margin-top: 8px; }
+
+  .showcase { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 24px; align-items: start; }
+  .real-media { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--line); background: #000; }
+  .real-media.portrait { aspect-ratio: 9/16; object-fit: contain; }
+  @media (max-width: 760px) { .showcase { grid-template-columns: 1fr; } }
+
+  .pins { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .pins th, .pins td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); color: var(--muted); }
+  .pins th { color: var(--text); }
+  .pins td:last-child { font-family: 'JetBrains Mono', monospace; color: var(--cyan); }
+
+  /* Code */
+  .code-box { background: #070a10; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .code-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--panel-2); border-bottom: 1px solid var(--line); }
+  .code-head span { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
+  .copy { background: transparent; border: 1px solid var(--line); color: var(--text); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 12px; }
+  pre { padding: 18px; background: #020503; overflow-x: auto; max-height: 420px; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #a9e8bd; }
+
+  /* Timeline */
+  .timeline { border-left: 2px solid var(--line); padding-left: 24px; }
+  .step { position: relative; margin-bottom: 26px; }
+  .step::before {
+    content: ''; position: absolute; left: -32px; top: 6px; width: 14px; height: 14px; border-radius: 3px;
+    background: var(--line);
+  }
+  .step.done::before { background: var(--green); box-shadow: var(--glow); }
+  .step.now::before { background: var(--orange); box-shadow: 0 0 12px var(--orange); }
+  .step h4 { font-size: 16px; }
+  .step p { color: var(--muted); font-size: 15px; }
+
+  /* Contact */
+  .contact { text-align: center; }
+  .contact .lead { margin: 0 auto 28px; }
+  footer { padding: 30px 0; text-align: center; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo">AARON SAUCEDO</a>
+    <ul>
+      <li><a href="#charger">Battery Charger</a></li>
+      <li><a href="#tetris">Tetris</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="blocks"></canvas>
+  <div class="wrap">
+    <div class="tag">&gt; Electrical Engineering @ CSULB</div>
+    <h1>I design and build<br><span>things that work.</span></h1>
+    <p>Hands-on projects that take an idea from CAD and simulation to a working build, from an Arduino Tetris game to a battery charging circuit with a 3D-printed enclosure. I'm aiming for design engineering in aerospace or automotive.</p>
+    <a href="#charger" class="btn">See projects</a>
+    <a href="#contact" class="btn ghost">Get in touch</a>
+    <div class="readout"><span>CH1 <b>CAD</b></span><span>CH2 <b>SIMULATION</b></span><span>CH3 <b>FIRMWARE</b></span><span>CH4 <b>TEST</b></span></div>
+  </div>
+</header>
+
+<!-- ============ PROJECT 1: BATTERY CHARGER ============ -->
+<section id="charger">
+  <div class="wrap">
+    <div class="section-label">PROJECT 01</div>
+    <span class="status wip">● In progress</span>
+    <h2>Battery Charger with Live Power Monitor</h2>
+    <p class="lead">A battery charging circuit with a live monitoring dashboard. An INA219 sensor measures the voltage, current and power going into the battery, and an Arduino shows the readings in real time on a 2-inch color screen, alongside the time and date. The circuit lives on a breadboard with power resistors for now, and I designed a transformer enclosure in Onshape and 3D-printed it.</p>
+
+    <div class="chips">
+      <span class="chip">Circuit design</span>
+      <span class="chip">LTspice simulation</span>
+      <span class="chip">TIP29C</span>
+      <span class="chip">INA219 current sensing</span>
+      <span class="chip">Arduino</span>
+      <span class="chip">ST7789 TFT dashboard</span>
+      <span class="chip">Onshape CAD</span>
+      <span class="chip">3D printing</span>
+    </div>
+
+    <h3>Circuit design &amp; simulation</h3>
+    <div class="grid-2">
+      <div>
+        <img class="real-media" src="media/charger-schematic.png" alt="LTspice schematic of the charging stage with TIP29C transistor, zener diode, MURS320 diode and output capacitor">
+        <div class="caption">Charging stage in LTspice: a TIP29C transistor stage with an 8.2 V zener reference (BZX84C8V2L), a MURS320 diode, and a 100 µF / 1 kΩ output.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/charger-sim.png" alt="LTspice transient plot of output voltage rising to about 16 V in 2 ms">
+        <div class="caption">Transient simulation: the output node rises to about 16 V within roughly 2 ms and then holds steady.</div>
+      </div>
+    </div>
+
+    <h3>Transformer enclosure: Onshape to 3D print</h3>
+    <div class="grid-3">
+      <div>
+        <img class="real-media" src="media/enclosure-cad-box.png" alt="Onshape model of an open box enclosure with wire holes">
+        <div class="caption">Box modeled in Onshape, with holes in the walls for the transformer's wires.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/enclosure-cad-lid.png" alt="Onshape model of the enclosure lid">
+        <div class="caption">A matching lid with a lip that sits inside the box walls.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/charger-enclosure.jpg" alt="Printed black enclosure with green lid">
+        <div class="caption">The printed result, with a black box and green lid, in use on the lab bench.</div>
+      </div>
+    </div>
+
+    <h3>Build log</h3>
+    <div class="timeline">
+      <div class="step done">
+        <h4>Designed &amp; simulated the circuit</h4>
+        <p>Built the charging stage in LTspice and ran transient simulations to check the output before building it.</p>
+      </div>
+      <div class="step done">
+        <h4>Transformer enclosure</h4>
+        <p>Modeled a box and fitted lid in Onshape, with holes for the wires to pass through, then 3D-printed it.</p>
+      </div>
+      <div class="step done">
+        <h4>Display dashboard</h4>
+        <p>Built a "Battery Monitor" screen on the 2" TFT showing time, date, voltage, current and power, each in its own color.</p>
+      </div>
+      <div class="step done">
+        <h4>INA219 reading current</h4>
+        <p>Sensor wired over I²C and reading real current through the test circuit (6.4 mA on a 9 V test source).</p>
+      </div>
+      <div class="step now">
+        <h4>Now: voltage measurement &amp; charging stage</h4>
+        <p>Getting accurate bus-voltage readings and building out the charging side of the circuit.</p>
+      </div>
+      <div class="step">
+        <h4>Next: final assembly</h4>
+        <p>Move from breadboard to a soldered board and mount everything inside the enclosure.</p>
+      </div>
+    </div>
+
+    <h3>Progress photos</h3>
+    <div class="grid-2">
+      <div>
+        <img class="real-media" src="media/charger-lcd.jpg" alt="Battery Monitor dashboard on the 2-inch TFT next to the Arduino">
+        <div class="caption">The Battery Monitor dashboard: live clock plus voltage, current and power readouts.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/charger-breadboard.jpg" alt="Breadboard test circuit with INA219 sensor, power resistors, 9V battery and LCD">
+        <div class="caption">Breadboard test with the INA219 sensor, power resistors and a 9 V source, reading 6.4 mA.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/charger-lab-bench.jpg" alt="Lab bench setup with laptop, Arduino, breadboard, INA219 and oscilloscope">
+        <div class="caption">Testing in the lab, with the Arduino IDE, the circuit and an oscilloscope on the bench.</div>
+      </div>
+    </div>
+
+    <h3>How the monitor works</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Wiring</h4>
+        <table class="pins">
+          <tr><th>Part</th><th>Arduino pin</th></tr>
+          <tr><td>LCD DIN / CLK</td><td>D11 / D13</td></tr>
+          <tr><td>LCD CS / DC / RST / BL</td><td>D10 / D7 / D8 / D9</td></tr>
+          <tr><td>INA219 SDA / SCL</td><td>A4 / A5</td></tr>
+          <tr><td>INA219 VIN+ / VIN&minus;</td><td>supply + / load +</td></tr>
+        </table>
+        <p class="caption">The load's ground is tied to the Arduino's GND so the INA219 can measure voltage.</p>
+      </div>
+      <div class="card">
+        <h4>Engineering details</h4>
+        <ul>
+          <li><b>Clean readings:</b> I wrote the INA219's config register directly to average 128 samples in hardware, then added exponential smoothing and a deadband in software so the display doesn't flicker around zero</li>
+          <li><b>Clock with no RTC chip:</b> it sets itself from the computer's time at compile, then keeps time with millis(), handling month lengths and leap years</li>
+          <li><b>Flicker-free display:</b> numbers are printed right-aligned at a fixed width over a background color, so only the digits redraw</li>
+          <li><b>Robust I²C:</b> a bus timeout keeps a loose wire from freezing the sketch, and a clear on-screen error appears if the sensor isn't found</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Code</h3>
+    <div class="code-box">
+      <div class="code-head"><span>battery_monitor.ino &middot; 317 lines</span><button class="copy" data-target="charger-code">Copy</button></div>
+      <pre><code id="charger-code">/*
+  Battery Monitor - Arduino Uno R3 + INA219 + 2" ST7789V LCD (240x320)
+
+  Shows live load voltage, current, and power from the INA219,
+  plus a live clock that is set automatically from your computer's
+  time when you compile/upload the sketch.
+
+  Wiring (from earlier):
+    LCD:    VCC-5V  GND-GND  DIN-D11  CLK-D13  CS-D10  DC-D7  RST-D8  BL-D9
+    INA219: VCC-5V  GND-GND  SDA-A4   SCL-A5
+            VIN+ -&gt; supply (+), VIN- -&gt; load (+), load GND tied to Arduino GND
+
+  Libraries (install with Arduino IDE &gt; Tools &gt; Manage Libraries):
+    - Adafruit ST7735 and ST7789 Library
+    - Adafruit GFX Library
+    - Adafruit INA219
+    - Adafruit BusIO (installed automatically as a dependency)
+*/
+
+#include &lt;SPI.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_ST7789.h&gt;
+#include &lt;Adafruit_INA219.h&gt;
+
+// ---------------- Pins ----------------
+#define TFT_CS   10
+#define TFT_DC    7
+#define TFT_RST   8
+#define TFT_BL    9
+
+// ---------------- Settings you can tweak ----------------
+// Seconds between compiling and the sketch actually starting (compile + upload time).
+// Increase if the clock runs a few seconds behind right after upload.
+const uint8_t UPLOAD_DELAY_SEC = 8;
+
+// Milliseconds per "clock second". The Uno's resonator isn't perfect, so if the clock
+// drifts, adjust this: clock runs FAST -&gt; raise it slightly (e.g. 1003); SLOW -&gt; lower it.
+const unsigned long MS_PER_SEC = 1000;
+
+// How often to refresh the sensor readings (ms)
+const unsigned long SENSOR_INTERVAL = 500;
+
+// Smoothing: 0.0-1.0. Lower = smoother but slower to react. 0.2 is a good start.
+const float SMOOTHING = 0.2;
+
+// Currents smaller than this (mA) are shown as 0 so noise doesn't flicker around zero
+const float CURRENT_DEADBAND_MA = 1.0;
+
+// Backlight brightness 0-255
+const uint8_t BACKLIGHT = 255;
+
+// ---------------- Colors ----------------
+#define COL_BG      ST77XX_BLACK
+#define COL_TITLE   ST77XX_WHITE
+#define COL_CLOCK   ST77XX_CYAN
+#define COL_DATE    ST77XX_WHITE
+#define COL_LABEL   ST77XX_WHITE
+#define COL_VOLT    ST77XX_YELLOW
+#define COL_CURR    ST77XX_GREEN
+#define COL_POWER   ST77XX_MAGENTA
+#define COL_LINE    0x7BEF   // gray
+
+// ---------------- Objects ----------------
+Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+Adafruit_INA219 ina219;
+
+// ---------------- Clock state ----------------
+uint8_t  hh, mm, ss;
+uint8_t  dayOfMonth, monthNum;
+uint16_t yearNum;
+unsigned long lastTick = 0;
+unsigned long lastSensor = 0;
+
+// ---------------- Smoothed readings ----------------
+float avgVolt = 0, avgCurr = 0, avgPower = 0;
+bool  firstReading = true;
+
+const char MONTHS[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
+
+// ---------------- Layout (landscape 320x240) ----------------
+const int16_t VALUE_X = 128;   // x where numbers start
+const int16_t UNIT_X  = 262;   // x where units start
+const int16_t Y_VOLT  = 112;
+const int16_t Y_CURR  = 154;
+const int16_t Y_POWER = 196;
+
+// =====================================================================
+//                              Clock
+// =====================================================================
+
+uint8_t monthFromString(const char *s) {
+  for (uint8_t i = 0; i &lt; 12; i++) {
+    if (strncmp(s, MONTHS + i * 3, 3) == 0) return i + 1;
+  }
+  return 1;
+}
+
+bool isLeapYear(uint16_t y) {
+  return (y % 4 == 0 &amp;&amp; y % 100 != 0) || (y % 400 == 0);
+}
+
+uint8_t daysInMonth(uint8_t m, uint16_t y) {
+  const uint8_t days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  if (m == 2 &amp;&amp; isLeapYear(y)) return 29;
+  return days[m - 1];
+}
+
+// Advance the clock by one second, rolling over minutes, hours, days, months, years
+void tickOneSecond() {
+  if (++ss &lt; 60) return;
+  ss = 0;
+  if (++mm &lt; 60) return;
+  mm = 0;
+  if (++hh &lt; 24) return;
+  hh = 0;
+  if (++dayOfMonth &lt;= daysInMonth(monthNum, yearNum)) return;
+  dayOfMonth = 1;
+  if (++monthNum &lt;= 12) return;
+  monthNum = 1;
+  yearNum++;
+}
+
+// __TIME__ = "HH:MM:SS", __DATE__ = "Nov 10 2026" (filled in by the compiler)
+void setClockFromCompileTime() {
+  const char *t = __TIME__;
+  hh = (t[0] - '0') * 10 + (t[1] - '0');
+  mm = (t[3] - '0') * 10 + (t[4] - '0');
+  ss = (t[6] - '0') * 10 + (t[7] - '0');
+
+  const char *d = __DATE__;
+  monthNum   = monthFromString(d);
+  dayOfMonth = (d[4] == ' ' ? 0 : (d[4] - '0')) * 10 + (d[5] - '0');
+  yearNum    = atoi(d + 7);
+
+  // Make up for the time spent compiling + uploading
+  for (uint8_t i = 0; i &lt; UPLOAD_DELAY_SEC; i++) tickOneSecond();
+}
+
+// =====================================================================
+//                              Drawing
+// =====================================================================
+
+void drawStaticLayout() {
+  tft.fillScreen(COL_BG);
+
+  // Title
+  tft.setTextSize(2);
+  tft.setTextColor(COL_TITLE, COL_BG);
+  tft.setCursor(70, 6);
+  tft.print(F("BATTERY MONITOR"));
+  tft.drawFastHLine(0, 26, 320, COL_LINE);
+
+  // Divider between clock and readings
+  tft.drawFastHLine(0, 100, 320, COL_LINE);
+
+  // Labels
+  tft.setTextSize(2);
+  tft.setTextColor(COL_LABEL, COL_BG);
+  tft.setCursor(8, Y_VOLT + 5);  tft.print(F("VOLTAGE"));
+  tft.setCursor(8, Y_CURR + 5);  tft.print(F("CURRENT"));
+  tft.setCursor(8, Y_POWER + 5); tft.print(F("POWER"));
+
+  // Units
+  tft.setTextColor(COL_VOLT, COL_BG);
+  tft.setCursor(UNIT_X, Y_VOLT + 5);  tft.print(F("V"));
+  tft.setTextColor(COL_CURR, COL_BG);
+  tft.setCursor(UNIT_X, Y_CURR + 5);  tft.print(F("mA"));
+  tft.setTextColor(COL_POWER, COL_BG);
+  tft.setCursor(UNIT_X, Y_POWER + 5); tft.print(F("W"));
+}
+
+void drawClock() {
+  char buf[16];
+
+  // Time, 12-hour format. Drawing text with a background color overwrites
+  // the old digits, so there's no flicker from clearing the screen.
+  uint8_t h12 = hh % 12;
+  if (h12 == 0) h12 = 12;
+  snprintf(buf, sizeof(buf), "%2u:%02u:%02u", h12, mm, ss);
+  tft.setTextSize(4);
+  tft.setTextColor(COL_CLOCK, COL_BG);
+  tft.setCursor(10, 38);
+  tft.print(buf);
+
+  // AM / PM
+  tft.setTextSize(2);
+  tft.setCursor(214, 52);
+  tft.print(hh &lt; 12 ? F("AM") : F("PM"));
+
+  // Date, e.g. "Nov 10, 2026"
+  char mon[4];
+  strncpy(mon, MONTHS + (monthNum - 1) * 3, 3);
+  mon[3] = '\0';
+  snprintf(buf, sizeof(buf), "%s %2u, %u", mon, dayOfMonth, yearNum);
+  tft.setTextColor(COL_DATE, COL_BG);
+  tft.setCursor(10, 76);
+  tft.print(buf);
+}
+
+// Print a number right-aligned in a fixed width so old digits get overwritten
+void drawValue(float value, int16_t y, uint8_t decimals, uint16_t color) {
+  char buf[12];
+  dtostrf(value, 7, decimals, buf);   // width 7, e.g. " 12.34" or "  500.0"
+  tft.setTextSize(3);
+  tft.setTextColor(color, COL_BG);
+  tft.setCursor(VALUE_X, y);
+  tft.print(buf);
+}
+
+// Make the INA219 average 128 samples per reading in hardware (~69 ms each).
+// By default it takes ONE quick sample, which catches every bit of ripple and noise.
+// Config register 0x00 = 32V range | +/-320mV shunt range | 128-sample avg (bus + shunt) | continuous
+void setHardwareAveraging() {
+  Wire.beginTransmission(0x40);
+  Wire.write(0x00);          // config register
+  Wire.write(0x3F);          // high byte
+  Wire.write(0xFF);          // low byte  -&gt; 0x3FFF
+  Wire.endTransmission();
+}
+
+void drawReadings() {
+  float shunt_mV   = ina219.getShuntVoltage_mV();
+  float bus_V      = ina219.getBusVoltage_V();
+  float current_mA = ina219.getCurrent_mA();
+
+  // Load voltage = voltage at VIN- plus the small drop across the shunt resistor
+  float load_V = bus_V + (shunt_mV / 1000.0);
+
+  // Software smoothing (exponential moving average) on top of the hardware averaging
+  if (firstReading) {
+    avgVolt = load_V;
+    avgCurr = current_mA;
+    firstReading = false;
+  } else {
+    avgVolt += SMOOTHING * (load_V - avgVolt);
+    avgCurr += SMOOTHING * (current_mA - avgCurr);
+  }
+
+  // Hide tiny noise around zero
+  float shownCurr = (fabs(avgCurr) &lt; CURRENT_DEADBAND_MA) ? 0.0 : avgCurr;
+  avgPower = avgVolt * shownCurr / 1000.0;   // W, from the smoothed values
+
+  drawValue(avgVolt,  Y_VOLT,  2, COL_VOLT);
+  drawValue(shownCurr, Y_CURR, 1, COL_CURR);
+  drawValue(avgPower, Y_POWER, 2, COL_POWER);
+
+  // Serial Monitor (115200 baud): raw vs smoothed, handy for checking noise
+  Serial.print(F("raw V: "));   Serial.print(load_V, 3);
+  Serial.print(F("  raw mA: ")); Serial.print(current_mA, 1);
+  Serial.print(F("  |  V: "));  Serial.print(avgVolt, 3);
+  Serial.print(F("  mA: "));    Serial.println(shownCurr, 1);
+}
+
+// =====================================================================
+//                          Setup / Loop
+// =====================================================================
+
+void setup() {
+  Serial.begin(115200);
+
+  // Backlight on
+  pinMode(TFT_BL, OUTPUT);
+  analogWrite(TFT_BL, BACKLIGHT);
+
+  // LCD: 240x320, landscape
+  tft.init(240, 320);
+  tft.setRotation(1);
+  // This panel needs color inversion ON (tested with the color diagnostic)
+  tft.invertDisplay(true);
+
+  // Keep the I2C bus from freezing the sketch if a wire glitches
+  Wire.begin();
+  Wire.setWireTimeout(3000, true);
+
+  // INA219 sensor
+  if (!ina219.begin()) {
+    tft.fillScreen(COL_BG);
+    tft.setTextSize(2);
+    tft.setTextColor(ST77XX_RED, COL_BG);
+    tft.setCursor(10, 100);
+    tft.print(F("INA219 NOT FOUND"));
+    tft.setCursor(10, 130);
+    tft.print(F("Check SDA=A4, SCL=A5"));
+    Serial.println(F("INA219 not found - check wiring"));
+    while (1) delay(100);
+  }
+  // Default calibration is 32V / 2A range (fine for 13.8 V and 0.5 A).
+  setHardwareAveraging();
+
+  setClockFromCompileTime();
+  drawStaticLayout();
+  drawClock();
+  drawReadings();
+
+  lastTick   = millis();
+  lastSensor = millis();
+}
+
+void loop() {
+  unsigned long now = millis();
+
+  // Clock: advance one second for every MS_PER_SEC that passes
+  bool clockChanged = false;
+  while (now - lastTick &gt;= MS_PER_SEC) {
+    lastTick += MS_PER_SEC;
+    tickOneSecond();
+    clockChanged = true;
+  }
+  if (clockChanged) drawClock();
+
+  // Sensor readings
+  if (now - lastSensor &gt;= SENSOR_INTERVAL) {
+    lastSensor = now;
+    drawReadings();
+  }
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT 2: TETRIS ============ -->
+<section id="tetris">
+  <div class="wrap">
+    <div class="section-label">PROJECT 02</div>
+    <span class="status done">● Complete</span>
+    <h2>Handheld Tetris on Arduino</h2>
+    <p class="lead">A full Tetris game written from scratch for an Arduino Uno, running on a 2-inch color TFT screen with five push-button controls. It has all 7 pieces with rotation and wall kicks, line clearing, scoring, and speed that ramps up as you play.</p>
+
+    <div class="chips">
+      <span class="chip">Arduino</span>
+      <span class="chip">C++</span>
+      <span class="chip">ST7789 2" TFT (240×320)</span>
+      <span class="chip">SPI</span>
+      <span class="chip">Push-button controls</span>
+    </div>
+
+    <h3>See it in action</h3>
+    <div class="showcase">
+      <div>
+        <video class="real-media portrait" src="media/tetris-gameplay.mp4" poster="media/tetris-poster.jpg" controls playsinline preload="metadata"></video>
+        <div class="caption">Gameplay: pieces controlled with push buttons on the breadboard, with score and lines shown on screen.</div>
+      </div>
+      <div>
+        <img class="real-media" src="media/tetris-build.jpg" alt="2-inch ST7789 LCD module wired to an Elegoo Uno R3 running a display test">
+        <div class="caption">Early bring-up: first test of the 2" ST7789 TFT display before writing the game.</div>
+      </div>
+    </div>
+
+    <h3>How it works</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Hardware</h4>
+        <ul>
+          <li>Elegoo Uno R3 (Arduino Uno compatible)</li>
+          <li>2-inch ST7789 color TFT LCD module, driven over SPI</li>
+          <li>Push buttons on a breadboard for move, rotate and drop</li>
+          <li>Powered over USB</li>
+        </ul>
+        <h4 style="margin-top:18px">Wiring</h4>
+        <table class="pins">
+          <tr><th>Part</th><th>Arduino pin</th></tr>
+          <tr><td>TFT CS / DC / RST</td><td>D10 / D8 / D9</td></tr>
+          <tr><td>TFT SDA (MOSI) / SCL (SCK)</td><td>D11 / D13</td></tr>
+          <tr><td>Left / Right / Down</td><td>D2 / D3 / D4</td></tr>
+          <tr><td>Rotate / Start</td><td>D5 / D6</td></tr>
+        </table>
+        <p class="caption">Buttons use the internal pull-ups, so each one just connects its pin to GND.</p>
+      </div>
+      <div class="card">
+        <h4>Challenges I solved</h4>
+        <ul>
+          <li><b>Memory:</b> each piece's 4 rotations are stored as 16-bit bitmasks in flash (PROGMEM) to save the Uno's 2 KB of RAM</li>
+          <li><b>Collision &amp; wall kicks:</b> every move is tested before it's drawn, and rotation nudges the piece left or right if it would hit a wall</li>
+          <li><b>Line clearing:</b> full rows collapse, the board shifts down, and the game speeds up as you clear more</li>
+          <li><b>Smooth controls:</b> button edge detection with hold-to-repeat, plus a fast soft drop</li>
+          <li><b>Fast drawing:</b> only the moving piece is erased and redrawn each step instead of the whole screen</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Code</h3>
+    <div class="code-box">
+      <div class="code-head"><span>tetris.ino &middot; 338 lines</span><button class="copy" data-target="tetris-code">Copy</button></div>
+      <pre><code id="tetris-code">#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_ST7789.h&gt;
+#include &lt;SPI.h&gt;
+
+// -------------------- Display pins --------------------
+#define TFT_CS   10
+#define TFT_DC    8
+#define TFT_RST   9
+Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+
+// -------------------- Button pins --------------------
+#define BTN_LEFT    2
+#define BTN_RIGHT   3
+#define BTN_DOWN    4
+#define BTN_ROTATE  5
+#define BTN_START   6
+
+// -------------------- Playfield --------------------
+// Classic 10x20 Tetris grid
+const uint8_t W = 10;
+const uint8_t H = 20;
+const uint8_t CELL = 12;     // pixels per cell (fits 10x20 in 120x240)
+const int16_t SCREEN_W = 320;
+const int16_t SCREEN_H = 240;
+const int16_t FIELD_W  = W * CELL;     // 120
+const int16_t FIELD_H  = H * CELL;     // 240
+const int16_t OFF_X    = (SCREEN_W - FIELD_W) / 2; // centered: 100
+const int16_t OFF_Y    = 0;
+
+// Board: 0 = empty, 1..7 = piece color
+uint8_t board[H][W];
+
+// -------------------- Colors --------------------
+#define C_BG    ST77XX_BLACK
+#define C_GRID  ST77XX_CYAN
+const uint16_t PIECE_COL[8] = {
+  C_BG,                 // 0 empty
+  ST77XX_CYAN,          // 1 I
+  ST77XX_YELLOW,        // 2 O
+  ST77XX_MAGENTA,       // 3 T
+  ST77XX_GREEN,         // 4 S
+  ST77XX_RED,           // 5 Z
+  ST77XX_BLUE,          // 6 J
+  ST77XX_ORANGE         // 7 L (orange not in palette; will look similar to YELLOW on some panels)
+};
+
+// -------------------- Tetrominoes --------------------
+// 4x4 masks in row-major; bit 15 is (0,0). Each piece has 4 rotations.
+const uint16_t TETROMINO[7][4] PROGMEM = {
+  // I
+  { 0x0F00, 0x2222, 0x0F00, 0x2222 },
+  // O
+  { 0x0660, 0x0660, 0x0660, 0x0660 },
+  // T
+  { 0x0E40, 0x4C40, 0x4E00, 0x4640 },
+  // S
+  { 0x06C0, 0x4620, 0x06C0, 0x4620 },
+  // Z
+  { 0x0C60, 0x2640, 0x0C60, 0x2640 },
+  // J
+  { 0x08E0, 0x6440, 0x0E20, 0x44C0 },
+  // L
+  { 0x02E0, 0x4460, 0x0E80, 0xC440 }
+};
+
+// -------------------- Game state --------------------
+int8_t curX, curY;          // top-left of 4x4 mask on board coords
+uint8_t curR, curId;        // rotation 0..3, piece 0..6
+bool gameOver = false;
+uint16_t score = 0;
+uint16_t linesCleared = 0;
+
+// Timing
+unsigned long lastFall = 0;
+unsigned long fallMs = 500;   // gravity (lower = faster)
+
+// Button states (edge detect + repeat)
+struct BtnState { uint8_t pin; bool prev; unsigned long rptAt; };
+BtnState btns[5] = {
+  {BTN_LEFT,   true, 0},
+  {BTN_RIGHT,  true, 0},
+  {BTN_DOWN,   true, 0},
+  {BTN_ROTATE, true, 0},
+  {BTN_START,  true, 0}
+};
+const unsigned long REPEAT_DELAY = 220; // initial
+const unsigned long REPEAT_RATE  = 60;  // subsequent
+
+// -------------------- Utilities --------------------
+inline void drawCellPx(int gx, int gy, uint16_t col) {
+  int16_t x = OFF_X + gx * CELL;
+  int16_t y = OFF_Y + gy * CELL;
+  tft.fillRect(x+1, y+1, CELL-2, CELL-2, col);
+}
+
+void drawBoardFrame() {
+  tft.drawRect(OFF_X-1, OFF_Y-1, FIELD_W+2, FIELD_H+2, ST77XX_WHITE);
+}
+
+void clearField() {
+  tft.fillRect(OFF_X, OFF_Y, FIELD_W, FIELD_H, C_BG);
+  // light grid (optional)
+  for (int x = 1; x &lt; W; x++) {
+    tft.drawFastVLine(OFF_X + x*CELL, OFF_Y, FIELD_H, C_GRID);
+  }
+  for (int y = 1; y &lt; H; y++) {
+    tft.drawFastHLine(OFF_X, OFF_Y + y*CELL, FIELD_W, C_GRID);
+  }
+}
+
+void drawBoard() {
+  for (int y = 0; y &lt; H; y++)
+    for (int x = 0; x &lt; W; x++)
+      drawCellPx(x, y, PIECE_COL[board[y][x]]);
+}
+
+bool cellHits(int x, int y) {
+  return (x &lt; 0 || x &gt;= (int)W || y &lt; 0 || y &gt;= (int)H || board[y][x] != 0);
+}
+
+bool collide(int bx, int by, uint8_t rot, uint8_t id) {
+  uint16_t m = pgm_read_word(&amp;TETROMINO[id][rot]);
+  for (int r = 0; r &lt; 4; r++)
+    for (int c = 0; c &lt; 4; c++) {
+      if (m &amp; (0x8000 &gt;&gt; (r*4 + c))) {
+        int x = bx + c;
+        int y = by + r;
+        if (cellHits(x, y)) return true;
+      }
+    }
+  return false;
+}
+
+void drawPiece(int bx, int by, uint8_t rot, uint8_t id, bool erase=false) {
+  uint16_t m = pgm_read_word(&amp;TETROMINO[id][rot]);
+  for (int r = 0; r &lt; 4; r++)
+    for (int c = 0; c &lt; 4; c++) {
+      if (m &amp; (0x8000 &gt;&gt; (r*4 + c))) {
+        uint16_t col = erase ? C_BG : PIECE_COL[id+1];
+        drawCellPx(bx + c, by + r, col);
+      }
+    }
+  // redraw grid lines over erased cells for neatness (optional)
+  if (erase) {
+    for (int r = 0; r &lt; 4; r++)
+      for (int c = 0; c &lt; 4; c++) {
+        int x = bx + c, y = by + r;
+        if (x &gt;= 0 &amp;&amp; x &lt; W &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; H &amp;&amp; board[y][x] == 0) {
+          int16_t px = OFF_X + x*CELL;
+          int16_t py = OFF_Y + y*CELL;
+          tft.drawRect(px, py, CELL, CELL, C_GRID);
+        }
+      }
+  }
+}
+
+void lockPiece() {
+  uint16_t m = pgm_read_word(&amp;TETROMINO[curId][curR]);
+  for (int r = 0; r &lt; 4; r++)
+    for (int c = 0; c &lt; 4; c++) {
+      if (m &amp; (0x8000 &gt;&gt; (r*4 + c))) {
+        int x = curX + c;
+        int y = curY + r;
+        if (y &gt;= 0 &amp;&amp; y &lt; H &amp;&amp; x &gt;= 0 &amp;&amp; x &lt; W) {
+          board[y][x] = curId + 1;
+        }
+      }
+    }
+}
+
+void collapseLines() {
+  int cleared = 0;
+  for (int y = H-1; y &gt;= 0; y--) {
+    bool full = true;
+    for (int x = 0; x &lt; W; x++) if (board[y][x] == 0) { full = false; break; }
+    if (full) {
+      cleared++;
+      // move rows down
+      for (int yy = y; yy &gt; 0; yy--) {
+        for (int x = 0; x &lt; W; x++) board[yy][x] = board[yy-1][x];
+      }
+      for (int x = 0; x &lt; W; x++) board[0][x] = 0;
+      y++; // re-check this row
+    }
+  }
+  if (cleared) {
+    linesCleared += cleared;
+    score += (cleared == 1 ? 40 : cleared == 2 ? 100 : cleared == 3 ? 300 : 1200);
+    if (fallMs &gt; 120) fallMs -= 10 * cleared;  // speed up a bit
+    drawBoard();
+    // update HUD
+    tft.fillRect(4, 4, 92, 28, C_BG);
+    tft.setCursor(4, 4); tft.print(F("Score: ")); tft.print(score);
+    tft.setCursor(4, 16); tft.print(F("Lines: ")); tft.print(linesCleared);
+  }
+}
+
+void spawnPiece() {
+  curId = random(0, 7);
+  curR  = 0;
+  curX  = (W/2) - 2;
+  curY  = -1; // spawn slightly above
+  if (collide(curX, curY+1, curR, curId)) { // immediate collision → game over
+    gameOver = true;
+  } else {
+    curY++;
+    drawPiece(curX, curY, curR, curId, false);
+  }
+}
+
+void resetGame() {
+  memset(board, 0, sizeof(board));
+  score = 0;
+  linesCleared = 0;
+  fallMs = 500;
+  gameOver = false;
+
+  tft.fillScreen(C_BG);
+  drawBoardFrame();
+  clearField();
+  drawBoard();
+
+  // HUD
+  tft.setTextSize(1);
+  tft.setTextColor(ST77XX_WHITE, C_BG);
+  tft.setCursor(4, 4);  tft.print(F("Score: 0"));
+  tft.setCursor(4, 16); tft.print(F("Lines: 0"));
+  tft.setCursor(4, 28); tft.print(F("Btns: L R D Rot Start"));
+
+  spawnPiece();
+}
+
+bool btnPressed(BtnState &amp;b) {
+  bool now = digitalRead(b.pin); // pullup: LOW = pressed
+  bool pressedEdge = (b.prev == true &amp;&amp; now == false);
+  bool held = (now == false);
+  unsigned long t = millis();
+
+  bool fire = false;
+  if (pressedEdge) {
+    fire = true;
+    b.rptAt = t + REPEAT_DELAY;
+  } else if (held &amp;&amp; t &gt;= b.rptAt) {
+    fire = true;
+    b.rptAt = t + REPEAT_RATE;
+  }
+  b.prev = now;
+  return fire;
+}
+
+void rotatePiece() {
+  uint8_t nr = (curR + 1) &amp; 3;
+  // simple wall-kick: try center, left, right
+  int tryX[3] = {curX, curX-1, curX+1};
+  for (int i = 0; i &lt; 3; i++) {
+    if (!collide(tryX[i], curY, nr, curId)) {
+      drawPiece(curX, curY, curR, curId, true);
+      curX = tryX[i];
+      curR = nr;
+      drawPiece(curX, curY, curR, curId, false);
+      return;
+    }
+  }
+}
+
+void setup() {
+  // Buttons
+  pinMode(BTN_LEFT,   INPUT_PULLUP);
+  pinMode(BTN_RIGHT,  INPUT_PULLUP);
+  pinMode(BTN_DOWN,   INPUT_PULLUP);
+  pinMode(BTN_ROTATE, INPUT_PULLUP);
+  pinMode(BTN_START,  INPUT_PULLUP);
+
+  // Display
+  tft.init(240, 320);   // for 320x240 panel (width, height)
+  tft.setRotation(1);   // landscape
+  tft.fillScreen(C_BG);
+
+  // Seed RNG
+  randomSeed(analogRead(A0));
+
+  resetGame();
+}
+
+void loop() {
+  // Handle Start/Reset at any time
+  if (btnPressed(btns[4])) {
+    resetGame();
+    return;
+  }
+
+  if (gameOver) {
+    // Show game over banner
+    tft.fillRect(OFF_X + 4, OFF_Y + FIELD_H/2 - 10, FIELD_W - 8, 20, ST77XX_RED);
+    tft.setTextColor(ST77XX_WHITE, ST77XX_RED);
+    tft.setTextSize(2);
+    tft.setCursor(OFF_X + 14, OFF_Y + FIELD_H/2 - 6);
+    tft.print(F("GAME OVER - START"));
+    tft.setTextSize(1);
+    delay(50);
+    return;
+  }
+
+  // Inputs
+  if (btnPressed(btns[0])) { // left
+    if (!collide(curX-1, curY, curR, curId)) {
+      drawPiece(curX, curY, curR, curId, true);
+      curX--; drawPiece(curX, curY, curR, curId, false);
+    }
+  }
+  if (btnPressed(btns[1])) { // right
+    if (!collide(curX+1, curY, curR, curId)) {
+      drawPiece(curX, curY, curR, curId, true);
+      curX++; drawPiece(curX, curY, curR, curId, false);
+    }
+  }
+  if (btnPressed(btns[3])) { // rotate
+    rotatePiece();
+  }
+
+  // Soft drop (while held we accelerate gravity)
+  bool downHeld = (digitalRead(BTN_DOWN) == LOW);
+
+  unsigned long now = millis();
+  if (now - lastFall &gt;= (downHeld ? 40 : fallMs)) {
+    lastFall = now;
+    // try move down
+    if (!collide(curX, curY+1, curR, curId)) {
+      drawPiece(curX, curY, curR, curId, true);
+      curY++; drawPiece(curX, curY, curR, curId, false);
+    } else {
+      // lock, clear, spawn
+      lockPiece();
+      collapseLines();
+      spawnPiece();
+    }
+  }
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-label">ABOUT ME</div>
+    <h2>Hi, I'm Aaron Saucedo</h2>
+    <p class="lead">I'm an electrical engineering student at Cal State Long Beach (CSULB), interested in design engineering for the aerospace and automotive industries. I like taking a project through every stage: modeling parts in CAD, simulating circuits before building them, writing the firmware, and testing everything on the bench. I'm looking for a place where I can keep learning design from experienced engineers and contribute to real hardware.</p>
+    <div class="grid-3">
+      <div class="card"><h4>Design &amp; CAD</h4><p>Onshape part modeling, 3D printing, enclosure design</p></div>
+      <div class="card"><h4>Electronics</h4><p>Circuit design, LTspice simulation, breadboard prototyping, sensors and displays</p></div>
+      <div class="card"><h4>Code &amp; test</h4><p>C/C++ on Arduino, I²C and SPI devices, oscilloscope, multimeter and bench supplies</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="section-label">CONTACT</div>
+    <h2>Let's talk</h2>
+    <p class="lead">Interested in my work, or have a design role or internship in aerospace or automotive? I'd love to connect.</p>
+    <a class="btn" href="https://www.linkedin.com/in/aaronsauce51">Connect on LinkedIn</a>
+    <p class="caption" style="margin-top:18px">linkedin.com/in/aaronsauce51</p>
+  </div>
+</section>
+
+<footer>&copy; 2026 Aaron Saucedo &middot; Built by hand in HTML &amp; CSS.</footer>
+
+<script>
+  // Copy buttons
+  document.querySelectorAll('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = document.getElementById(btn.dataset.target).innerText;
+      try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied!'; }
+      catch (e) { btn.textContent = 'Select & copy'; }
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  });
+
+  // Oscilloscope traces in the hero
+  const c = document.getElementById('blocks');
+  const ctx = c.getContext('2d');
+  let t = 0;
+  function resize() { c.width = c.offsetWidth; c.height = c.offsetHeight; }
+  function grid() {
+    const w = c.width, h = c.height, dx = w / 10, dy = h / 8;
+    ctx.strokeStyle = 'rgba(57,255,122,0.10)'; ctx.lineWidth = 1;
+    for (let i = 1; i < 10; i++) { ctx.beginPath(); ctx.moveTo(i*dx, 0); ctx.lineTo(i*dx, h); ctx.stroke(); }
+    for (let j = 1; j < 8; j++) { ctx.beginPath(); ctx.moveTo(0, j*dy); ctx.lineTo(w, j*dy); ctx.stroke(); }
+    ctx.strokeStyle = 'rgba(57,255,122,0.22)';
+    ctx.beginPath(); ctx.moveTo(w/2, 0); ctx.lineTo(w/2, h); ctx.moveTo(0, h/2); ctx.lineTo(w, h/2); ctx.stroke();
+  }
+  function trace(fn, color, width) {
+    const w = c.width, h = c.height;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 2) {
+      const y = h/2 - fn(x / w) * h * 0.18;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = color; ctx.lineWidth = width;
+    ctx.shadowColor = color; ctx.shadowBlur = 10;
+    ctx.stroke(); ctx.shadowBlur = 0;
+  }
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    grid();
+    trace(u => Math.sin((u * 4 - t) * Math.PI * 2), 'rgba(57,255,122,0.85)', 2);
+    trace(u => (Math.sin((u * 2.5 - t * 0.6) * Math.PI * 2) > 0 ? 1 : -1) * 0.6 - 0.9, 'rgba(255,179,71,0.55)', 1.5);
+    t += 0.004;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+</script>
+</body>
+</html>
